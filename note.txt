@@ -1,0 +1,11 @@
+1. install Fortify and config
+    - add [authA , authC] folder
+    - edit login file in two folder
+    - edit in app config file
+    - edit in fortify service provider file
+
+2. To fix 419 | Page expired
+    - php artisan session:table
+    - php artisan migrate
+    - php artisan cache:clear
+    - edit .enf file [SESSION_DRIVER=file To SESSION_DRIVER=database]
