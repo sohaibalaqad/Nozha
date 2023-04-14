@@ -19,11 +19,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Service extends Model
 {
-    
+
     static $rules = [
 		'title' => 'required',
 		'description' => 'required',
-		'icon' => 'required',
+
     ];
 
     protected $perPage = 20;
@@ -33,7 +33,22 @@ class Service extends Model
      *
      * @var array
      */
-    protected $fillable = ['title','description','icon'];
+    protected $fillable = ['title','description','photo_url'];
+
+
+    protected $appends = [
+        'image_url',
+    ];
+    public function getImageUrlAttribute()
+    {
+        if (!$this->photo_url) {
+            return 'https://via.placeholder.com/300';
+        }
+        if (stripos($this->photo_url, 'http') === 0) {
+            return $this->photo_url;
+        }
+        return asset('storage' . substr($this->photo_url, 6));
+    }
 
 
 

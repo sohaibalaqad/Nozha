@@ -33,11 +33,11 @@ class CoordinatorDashboardController extends Controller
         $pathIds = Path::where('coordinator_id', Auth::user()->id)->pluck('id')->toArray();
         $pathSub = PathSubscription::whereIn('path_id', $pathIds)->distinct('subscription_id')->pluck('subscription_id');
 
-        $subscription = Subscription::whereIn('id', $pathSub)
-            ->with('paths:name')
-            ->get();
-
-        return view('subscribers.index',[
+        // $subscription = Subscription::whereIn('id', $pathSub)
+        //     ->with('paths:name')
+        //     ->get();
+        $subscription = new Subscription();
+        return view('subscribers.subscription.index',[
             'paths' => $paths,
             'subscription' => $subscription
         ]);

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->time('start');
             $table->time('end');
             $table->string('photo_url')->nullable();
+            $table->string('video_url')->nullable();
             $table->double('distance');
             $table->double('fees')->nullable();
             $table->boolean('status')->default(false);

@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 // Welcome Page
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/archivedPaths', [\App\Http\Controllers\HomeController::class, 'archivedPaths'])->name('archivedPaths');
+Route::get('/rating/page/{id}', [\App\Http\Controllers\HomeController::class, 'rating'])->name('rating');
+Route::get('/rating/{id}', [\App\Http\Controllers\HomeController::class, 'ratingStore'])->name('rating.store');
+
 Route::get('/path/{id}', [\App\Http\Controllers\HomeController::class, 'showPath'])
     ->name('user.show.path');
 Route::get('/area/{id}', [\App\Http\Controllers\HomeController::class, 'showArea'])
@@ -34,6 +38,7 @@ Route::get('/dashboard', [\App\Http\Controllers\dashboardController::class, 'ind
 Route::get('/addArea', [\App\Http\Controllers\dashboardController::class, 'addArea'])->middleware(['auth:web'])->name('add.area');
 Route::post('/addArea', [\App\Http\Controllers\dashboardController::class, 'storeArea'])->middleware(['auth:web'])->name('store.area');
 Route::post('/addBalance', [\App\Http\Controllers\dashboardController::class, 'addBalance'])->middleware(['auth:web'])->name('add.balance');
+Route::post('/mark-as-read', [\App\Http\Controllers\AdminDashboardController::class, 'markNotificationUser'])->name('markNotificationUser');
 
 // require __DIR__.'/auth.php';
 
@@ -44,11 +49,12 @@ Route::middleware('auth:admin')
     ->group(function () {
         // Dashboard
     Route::get('/dashboard', [\App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/search', [\App\Http\Controllers\AdminDashboardController::class, 'search'])->name('search');
+
 
         // Area
     Route::resource('/areas', \App\Http\Controllers\AreaController::class);
-    Route::resource('/services', \App\Http\Controllers\ServiceController::class);
-
+    Route::resource('services', \App\Http\Controllers\ServiceController::class);
     Route::post('/mark-as-read', [\App\Http\Controllers\AdminDashboardController::class, 'markNotification'])->name('markNotification');
 
 });
@@ -66,7 +72,6 @@ Route::middleware('auth:coordinator')
     Route::get('/dashboard', [\App\Http\Controllers\CoordinatorDashboardController::class, 'index'])->name('coordinator.dashboard');
     Route::get('/subscribers', [\App\Http\Controllers\CoordinatorDashboardController::class, 'allSubscribers'])->name('coordinator.subscribers');
 
-
 });
 
 // Coordinator Auth
@@ -75,6 +80,7 @@ Route::group(['prefix' => 'coordinator', 'as' => 'coordinator.'], function(){
 
     Route::resource('/paths', \App\Http\Controllers\PathCOOController::class)
         ->middleware('auth:coordinator');
+
 });
 
 // Paths
@@ -83,10 +89,20 @@ Route::resource('admin/paths', \App\Http\Controllers\PathController::class)
 
 
 
+
 if (\Illuminate\Support\Facades\Auth::guard('admin')){
     Route::resource('admin/subscriptions', \App\Http\Controllers\SubscriptionController::class)
         ->middleware('auth:admin');
 }
+ //create subscription to  coordinator
+if (\Illuminate\Support\Facades\Auth::guard('coordinator')){
+    Route::resource('coordinator/coosubscriptions', \App\Http\Controllers\CoordinatorSubscriptionController::class)
+        ->middleware('auth:coordinator');
+}
+
+
+
+
 //if (\Illuminate\Support\Facades\Auth::guard('web')){
 //    Route::resource('admin/subscriptions', \App\Http\Controllers\SubscriptionController::class)
 //        ->middleware('auth:web');

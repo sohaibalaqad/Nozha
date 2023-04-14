@@ -6,6 +6,7 @@
             {{ Form::text('title', $service->title, ['class' => 'form-control' . ($errors->has('title') ? ' is-invalid' : ''), 'placeholder' => 'العنوان']) }}
             {!! $errors->first('title', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+
         <div class="form-group">
             {{ Form::label('الوصف') }}
             {{ Form::text('description', $service->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'الوصف']) }}
@@ -13,22 +14,15 @@
         </div>
 
 
-        {{--                <div class="form-group">--}}
-        {{--                    {{ Form::label('الأيقونة') }}--}}
-        {{--                    {{ Form::text('icon', $service->icon, ['class' => 'form-control' . ($errors->has('icon') ? ' is-invalid' : ''), 'placeholder' => 'الأيقونة']) }}--}}
-        {{--                    {!! $errors->first('icon', '<div class="invalid-feedback">:message</div>') !!}--}}
-        {{--                </div>--}}
-
-
-        <div class="form-group">
-            {{ Form::label('الأيقونة') }}
-            {{ Form::select('icon', config('icons') , $service->icon, ['class' => 'form-control' . ($errors->has('icon') ? ' is-invalid' : ''), 'placeholder' => 'الأيقونة', 'id' => 'icon-dropdown']) }}
-            {!! $errors->first('icon', '<div class="invalid-feedback">:message</div>') !!}
+        <div class="input-group p-2 my-3">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input{{ $errors->has('photoUrl') ? ' is-invalid' : '' }}" id="inputGroupFile01"  name="photoUrl"  >
+                <label class="custom-file-label" for="inputGroupFile01">أضف صورة للمسار</label>
+            </div>
         </div>
 
-
     </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">حفظ</button>
-    </div>
+        <div class="box-footer mt20">
+            <button type="submit" class="btn btn-primary">حفظ</button>
+        </div>
 </div>

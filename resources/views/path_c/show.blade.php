@@ -21,11 +21,17 @@
 
                     <div class="card-body">
 
-                        @if($path->photo_url)
+                        @if($path->image_url)
                             <div class="form-group">
                                 <img src="{{ $path->image_url }}" class="img-fluid">
                             </div>
                         @endif
+
+                        @if($path->video_url)
+                        <div class="form-group">
+                            <img src="{{ $path->video_url}}" class="img-fluid">
+                        </div>
+                    @endif
 
                         <div class="form-group">
                             <strong>الأسم:</strong>

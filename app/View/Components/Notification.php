@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Admin;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -22,6 +23,8 @@ class Notification extends Component
     public function render(): View|Closure|string
     {
         $notifications = auth()->user()->unreadNotifications;
+       
+        // $userNotifications = Admin::user()->unreadNotifications;
         return view('components.notification', ['notifications' => $notifications]);
     }
 }

@@ -42,11 +42,13 @@
 										<th>البدء</th>
 										<th>الإنتهاء</th>
 										<th>صورة</th>
+                                        <th>فيديو</th>
 										<th>المسافة</th>
 										<th>مصاريف</th>
 										<th>الحالة</th>
 										<th>الموقع</th>
 										<th>المنسق</th>
+                                        <th>العماليات</th>
 
                                         <th></th>
                                     </tr>
@@ -77,6 +79,29 @@
                                                             <div class="modal-body">
                                                                 <img src="{{ $path->image_url }}" class="img-fluid">
                                                             </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-outline-primary btn-sm"
+                                                        data-toggle="modal" data-target="#vidoeModal{{ $path->id }}">
+                                                    <i class="fa  fa-play-circle"></i></button>
+                                                <!-- The Modal to show image -->
+                                                <div class="modal fade" id="vidoeModal{{ $path->id }}">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body">
+                                                                <video controls class="w-100">
+                                                                    <source src="{{$path->video_path}}" type="video/mp4">
+                                                                </video>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -90,8 +115,8 @@
                                                     <span class="badge badge-danger">غير نشط</span>
                                                 @endif
                                             </td>
-											<td>{{ $path->area->name }}</td>
-											<td>{{ $path->coordinator->name }}</td>
+											<td>{{ $path->area->name ?? '' }}</td>
+											<td>{{ $path->coordinator->name ?? ''}}</td>
 
                                             <td>
                                                 <form action="{{ route('paths.destroy',$path->id) }}" method="POST">

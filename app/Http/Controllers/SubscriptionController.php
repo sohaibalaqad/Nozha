@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subscription;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 /**
@@ -106,4 +107,9 @@ class SubscriptionController extends Controller
         return redirect()->route('subscriptions.index')
             ->with('success', 'تم حذف الإشتراك');
     }
+
+    // public function coosubscriptions(){
+    //     $subscription = new Subscription();
+    //     return view('coordinator.subscription.create',compact('subscription'));
+    // }
 }

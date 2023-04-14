@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use App\Models\Coordinator;
 use App\Models\Path;
+use App\Models\review;
 use App\Models\Service;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
@@ -16,9 +17,19 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $paths = Path::where('status', true)
-            ->orderBy('created_at', 'desc')
-            ->take(6)->get();
+         // currentDate
+        $today = date('Y-m-d');
+         $paths = Path::where('date','=',$today)
+         ->orWhere('date','>',$today)
+         ->where('status', true)
+        ->orderBy('created_at', 'desc')
+         ->take(6)->get();
+
+
+
+        // $paths = Path::where('status', true)->where(!('date','<',$today))
+        //     ->orderBy('created_at', 'desc')
+        //     ->take(6)->get();
 
         $areas = Area::where('status', true)
             ->orderBy('created_at', 'desc')
@@ -26,10 +37,14 @@ class HomeController extends Controller
 
         $services = Service::get();
 
+        $review =review::get();
+
+
         return view('welcome', [
             'paths' => $paths,
             'areas' => $areas,
             'services' => $services,
+            'review'=>$review,
         ]);
     }
 
@@ -87,5 +102,33 @@ class HomeController extends Controller
 
         return redirect()->route('home')
             ->with('success', 'Coordinator created successfully.');
+    }
+
+    public function archivedPaths(){
+        $today = date('Y-m-d');
+        $archived_paths =Path::where('date','<',$today)
+        ->where('status', true)
+        ->take(6)->get();
+        // dd($archived_paths);
+        return view('path.archivepath', compact('archived_paths'));
+
+    }
+    public function rating($id){
+        $path =Path::findOrFail($id);
+        return view('path.rating', compact('path'));
+    }
+
+    public function ratingStore(Request $request,$id){
+     $review =new review();
+     $review->rating =$request->rating;
+     $review->path_id = $request->id;
+     $review->save();
+
+     $path =Path::findOrFail($id);
+     $path->rstatus = true;
+     $path->save();
+
+     return redirect()->route('home');
+
     }
 }

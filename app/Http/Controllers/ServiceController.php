@@ -43,13 +43,27 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
+
         request()->validate(Service::$rules);
 
-        $service = Service::create($request->all());
+        if ($request->file('photoUrl')){
+            $photoUrl= $request->file('photoUrl')->store('public/photo');
+            $request->merge([
+                'photo_url' => $photoUrl
+            ]);
+        }
+
+      $service=  Service::create($request->all());
 
         return redirect()->route('services.index')
             ->with('success', 'Service created successfully.');
     }
+
+
+
+
+
+
 
     /**
      * Display the specified resource.

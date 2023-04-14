@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Area;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Notifications\NewNotification;
+use Illuminate\Notifications\Notification as NotificationsNotification;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+
 
 /**
  * Class AreaController
@@ -115,6 +122,19 @@ class AreaController extends Controller
         }
 
         $area->update($request->all());
+        // dd($area);
+        if($request->status == 1){
+            $user = User::findOrFail($area->user_id);
+
+            $collection = [
+                'title' => 'مبروك !!',
+                'description' =>  'وافق الادمن على الموقع الذي اقتراحته'
+            ];
+         Notification::send($user, new NewNotification($collection));
+
+        }
+
+
 
         return redirect()->route('areas.index')
             ->with('success', 'تم التعديل على الموقع');

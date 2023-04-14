@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Path;
+use App\Models\Service;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,12 +18,12 @@ class AdminDashboardController extends Controller
         $pathsActiveCount = Path::where('status', true)->count();
 
         $users = User::with('subscription')->get();
-//        dd($users->subscription->id);
+        //        dd($users->subscription->id);
 
 
 
-//        dd($notifications);
-        return view('admin.dashboard',[
+        //        dd($notifications);
+        return view('admin.dashboard', [
             'usersCount' => $usersCount,
             'balenceSum' => $balenceSum,
             'subscriptionCount' => $subscriptionCount,
@@ -33,6 +34,7 @@ class AdminDashboardController extends Controller
 
     public function markNotification(Request $request)
     {
+
         auth()->user()
             ->unreadNotifications
             ->when($request->id, function ($query) use ($request) {
@@ -40,6 +42,38 @@ class AdminDashboardController extends Controller
             })
             ->markAsRead();
 
-        return redirect()->intended('admin/dashboard');
+         return redirect()->intended('admin/dashboard');
+
+    }
+
+    public function markNotificationUser(Request $request)
+    {
+        auth()->user()
+            ->unreadNotifications
+            ->when($request->id, function ($query) use ($request) {
+                return $query->where('id', $request->id);
+            })
+            ->markAsRead();
+
+        return redirect()->back();
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $paths = Path::where('name', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '%' . $search . '%')
+            ->get();
+
+        $services = Service::where('title', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '%' . $search . '%')
+            ->get();
+
+
+        return view('admin.search', [
+            'services' => $services,
+            'paths' => $paths
+        ]);
     }
 }

@@ -57,6 +57,13 @@ class PathController extends Controller
             ]);
         }
 
+        if ($request->file('videoUrl')){
+            $videoUrl= $request->file('videoUrl')->store('public/video');
+            $request->merge([
+                'video_url' => $videoUrl
+            ]);
+        }
+
 //        dd($request->all());
         $path = Path::create($request->all());
 
@@ -126,4 +133,8 @@ class PathController extends Controller
         return redirect()->route('paths.index')
             ->with('success', 'Path deleted successfully');
     }
+
+
+
+
 }

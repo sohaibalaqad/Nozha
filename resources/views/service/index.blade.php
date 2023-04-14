@@ -17,11 +17,12 @@
                                 {{ __('الخدمات') }}
                             </span>
 
-                             <div class="float-right">
-                                <a href="{{ route('services.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('إنشاء جديد') }}
+                            <div class="float-right">
+                                <a href="{{ route('services.create') }}" class="btn btn-primary btn-sm float-right"
+                                    data-placement="left">
+                                    {{ __('إنشاء جديد') }}
                                 </a>
-                              </div>
+                            </div>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -37,9 +38,9 @@
                                     <tr>
                                         <th>#</th>
 
-										<th>العنوان</th>
-										<th>الوصف</th>
-										<th>الأيقونة</th>
+                                        <th>العنوان</th>
+                                        <th>الوصف</th>
+                                        <th>الصورة</th>
 
                                         <th></th>
                                     </tr>
@@ -49,19 +50,41 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-											<td>{{ $service->title }}</td>
-											<td>{{ $service->description }}</td>
-											<td> <i class="fas {{ $value = config('icons')[$service->icon] }}"></i>
-                                                fas {{ $value = config('icons')[$service->icon] }}</td>
-
+                                            <td>{{ $service->title }}</td>
+                                            <td>{{ $service->description }}</td>
                                             <td>
-                                                <form action="{{ route('services.destroy',$service->id) }}" method="POST">
-{{--                                                    <a class="btn btn-sm btn-primary " href="{{ route('services.show',$service->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>--}}
-                                                    <a class="btn btn-sm btn-success" href="{{ route('services.edit',$service->id) }}"><i class="fa fa-fw fa-edit"></i> تعديل</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> حذف</button>
-                                                </form>
+                                                <button type="submit" class="btn btn-outline-primary btn-sm"
+                                                    data-toggle="modal" data-target="#imageModal{{ $service->id }}">
+                                                    <i class="fa fa-fw fa-mountain-sun"></i>
+                                                </button>
+                                                <!-- The Modal to show image -->
+                                                <div class="modal fade" id="imageModal{{ $service->id }}">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body">
+                                                                <img src="{{ $service->image_url }}" class="img-fluid">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                            <form action="{{ route('services.destroy', $service->id) }}" method="POST">
+                                                {{--                                                    <a class="btn btn-sm btn-primary " href="{{ route('services.show',$service->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a> --}}
+                                                <a class="btn btn-sm btn-success"
+                                                    href="{{ route('services.edit', $service->id) }}"><i
+                                                        class="fa fa-fw fa-edit"></i> تعديل</a>
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"><i
+                                                        class="fa fa-fw fa-trash"></i> حذف</button>
+                                            </form>
                                             </td>
                                         </tr>
                                     @endforeach

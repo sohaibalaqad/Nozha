@@ -47,7 +47,7 @@ class Path extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','description','date','start','end','photo_url','distance','fees','status','area_id','coordinator_id'];
+    protected $fillable = ['name','description','date','start','end','photo_url','distance','fees','status','area_id','coordinator_id','rstatus'];
 
 
     protected $appends = [
@@ -84,4 +84,10 @@ class Path extends Model
     {
         return $this->belongsToMany(Subscription::class, 'path_subscription');
     }
+
+    public function review()
+    {
+        return $this->hasOne(review::class);
+    }
+
 }

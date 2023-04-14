@@ -33,10 +33,19 @@
 {{--            {!! $errors->first('photo_url', '<div class="invalid-feedback">:message</div>') !!}--}}
 {{--        </div>--}}
 
-        <div class="input-group p-2">
+        <div class="input-group p-2 my-3">
             <div class="custom-file">
                 <input type="file" class="custom-file-input{{ $errors->has('photoUrl') ? ' is-invalid' : '' }}" id="inputGroupFile01"  name="photoUrl"  >
                 <label class="custom-file-label" for="inputGroupFile01">أضف صورة للمسار</label>
+            </div>
+        </div>
+
+
+        {{-- add video --}}
+        <div class="input-group p-2">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input{{ $errors->has('videoUrl') ? ' is-invalid' : '' }}" id="inputGroupFile02"  name="videoUrl"  >
+                <label class="custom-file-label" for="inputGroupFile02">أضف فيديو للمكان</label>
             </div>
         </div>
 

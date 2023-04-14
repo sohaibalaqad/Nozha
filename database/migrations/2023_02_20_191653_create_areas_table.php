@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('photo_url')->nullable();
             $table->string('video_url')->nullable();
             $table->boolean('status')->default(false);
-            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

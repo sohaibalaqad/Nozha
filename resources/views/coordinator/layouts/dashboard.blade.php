@@ -14,7 +14,8 @@
     <div class="main-header">
         <div class="logo-header">
             <a href="{{ route('coordinator.dashboard') }}" class="logo">
-                لوحة التحكم
+                <img height="60px" src="/assets/front/images/newlogo.png" alt="logo" srcset="">
+
             </a>
 
         </div>
@@ -86,7 +87,7 @@
                 </li>
 
                 <li class="nav-item{{ str_contains(request()->path(), 'subscribers') ? ' active' : '' }}">
-                    <a href="{{ route('coordinator.subscribers') }}">
+                    <a href="{{ route('coosubscriptions.index') }}#subscription">
                         <i class="la la-user-plus"></i>
                         <p>الإشتراكات</p>
                     </a>

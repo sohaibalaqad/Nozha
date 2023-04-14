@@ -2,6 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>Admin Dashboard</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.0.0/css/bootstrap.min.css">
@@ -16,16 +18,16 @@
     <div class="main-header">
         <div class="logo-header">
             <a href="{{ route('admin.dashboard') }}" class="logo">
-                لوحة التحكم
+                <img height="60px" src="/assets/front/images/newlogo.png" alt="logo" srcset="">
             </a>
 
         </div>
         <nav class="navbar navbar-header navbar-expand-lg">
             <div class="container-fluid">
 
-                <form class="navbar-left navbar-form nav-search mr-md-3" action="">
+                <form class="navbar-left navbar-form nav-search mr-md-3" action="{{ route('search') }}" method="get">
                     <div class="input-group">
-                        <input type="text" placeholder="بحث ..." class="form-control">
+                        <input type="text" name="search" placeholder="بحث ..." class="form-control">
                         <div class="input-group-append">
 								<span class="input-group-text">
 									<i class="la la-search search-icon"></i>
@@ -33,6 +35,7 @@
                         </div>
                     </div>
                 </form>
+
                 <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 {{--                    <li class="nav-item dropdown hidden-caret">--}}
 {{--                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}

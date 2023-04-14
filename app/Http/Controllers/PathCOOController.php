@@ -60,6 +60,13 @@ class PathCOOController extends Controller
                 'photo_url' => $photoUrl
             ]);
         }
+        
+        if ($request->file('videoUrl')){
+            $videoUrl= $request->file('videoUrl')->store('public/video');
+            $request->merge([
+                'video_url' => $videoUrl
+            ]);
+        }
 
 //        dd($request->all());
         $path = Path::create($request->all());

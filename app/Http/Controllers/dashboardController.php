@@ -9,6 +9,8 @@ use App\Models\Path;
 use App\Models\Area;
 use App\Models\PathSubscription;
 use App\Models\Subscription;
+use App\Models\User;
+use Illuminate\Notifications\NotificationSender;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
@@ -22,6 +24,8 @@ class dashboardController extends Controller
         $pathCount = Path::whereIn('id', $pathSub)->get();
 
         $lastSub = Subscription::where('user_id', Auth::user()->id)->first();
+        // $notification = Auth::user()->notifications ;
+//        dd($notification);
 
 //        dd($lastSub);
 
@@ -31,6 +35,8 @@ class dashboardController extends Controller
             'pathCount' => $pathCount,
             'balance' => $balance,
             'lastSub' => $lastSub,
+            // 'notification' => $notification,
+
         ]);
     }
 
@@ -64,6 +70,7 @@ class dashboardController extends Controller
             'title' => 'موقع جديد',
             'description' =>  'تم إضافة موقع جديد بواسطة' . Auth::guard('web')->user()->name
         ];
+        // من الشخص الذي سوف يستلم الرسالة
         $admins = Admin::get();
         Notification::send($admins, new NewNotification($collection));
 

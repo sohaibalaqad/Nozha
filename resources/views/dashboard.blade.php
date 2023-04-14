@@ -5,7 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="./img/fav.png" type="image/x-icon">
     <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.12.1/css/pro.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/dashboard/css/style.css') }}">
+<style>
+    .badge-counter:after {
+    content: attr(data-counter);
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 50%;
+}
+
+</style>
     <title>لوحة التحكم</title>
 </head>
 <body class="bg-gray-100" dir="rtl">
@@ -18,7 +37,7 @@
     <!-- logo -->
     <div class="flex-none w-56 flex flex-row items-center">
 
-        <strong class="capitalize ml-1 flex-1">لوحة التحكم</strong>
+        {{-- <img height="25px" src="/assets/front/images/newlogo.png" alt="logo" srcset=""> --}}
 
         <button id="sliderBtn" class="flex-none text-right text-gray-900 hidden md:block">
             <i class="fad fa-list-ul"></i>
@@ -54,13 +73,13 @@
                 <button class="menu-btn focus:outline-none focus:shadow-outline flex flex-wrap items-center">
                     <div class="ml-2 capitalize flex ">
                         <h1 class="text-sm text-gray-800 font-semibold m-0 p-0 leading-none"> {{ Auth::user()->name }} </h1>
-                        <i class="fad fa-chevron-down ml-2 text-xs leading-none"></i>
+                        <i class="fad fa-chevron-down mr-2 text-xs leading-none"></i>
                     </div>
                 </button>
 
                 <button class="hidden fixed top-0 left-0 z-10 w-full h-full menu-overflow"></button>
 
-                <div class="text-gray-500 menu hidden md:mt-10 md:w-full rounded bg-white shadow-md absolute z-20 right-0 w-40 mt-5 py-2 animated faster">
+                <div class="text-gray-500 menu hidden md:mt-10 md:w-full rounded bg-white shadow-md absolute z-20 left-0 w-40 mt-5 py-2 animated faster">
                     <!-- item -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -75,6 +94,54 @@
                 </div>
             </div>
             <!-- end user -->
+
+            {{-- notification --}}
+
+           <!-- notification bell -->
+<div class="relative">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        <i class="fad fa-bell"></i>
+        <span class="badge badge-danger badge-counter" data-counter="{{Auth::user()->unreadNotifications->count()}}">0</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end animated--grow-in" aria-labelledby="navbarDropdown">
+        <h6 class="dropdown-header text-right">
+            الإشعارات
+        </h6>
+
+        @forelse(Auth::user()->unreadNotifications as $notification)
+        <form action="{{route('markNotificationUser')}}" method="post">
+            @csrf
+            <input type="hidden" name="id" value="{{ $notification->id }}">
+
+        <a class="dropdown-item d-flex align-items-center" href="{{route('markNotification')}}" onclick="event.preventDefault();
+        this.closest('form').submit();">
+             <div class="mr-3">
+                <div class="icon-circle bg-success">
+
+                    <i class="fad fa-check text-white"></i>
+                </div>
+            </div>
+
+
+
+            <div>
+                <div class="small text-gray-500">{{ $notification->created_at }}</div>
+                <span class="text-right font-weight-bold">{{ $notification->data['title'] }}</span>
+                <div class="small text-gray-500">{{ $notification->data['description'] }}</div>
+            </div>
+        </a>
+
+        @empty
+        <div class="small text-blcak-500 text-right mx-3">لا يوجد اشعارات  </div>
+        @endforelse
+
+        {{-- <a class="dropdown-item text-center small text-gray-500" href="#">عرض الكل</a> --}}
+    </div>
+</div>
+<!-- end notification bell -->
+
+                {{-- notification --}}
 
 
         </div>
@@ -220,7 +287,7 @@
                                 @endforeach
                             </select>
 
-                            <input type="hidden" name="subscription_id" value="{{ $lastSub->id }}">
+                            {{-- <input type="hidden" name="subscription_id" value="{{ $lastSub->id }}"> --}}
                             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 mt-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">إشتراك</button>
                         </form>
                     </div>
@@ -313,6 +380,13 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="{{ asset('assets/dashboard/js/scripts.js') }}"></script>
 <!-- end script -->
+<script>
+$('#mytoast').toast({delay:5000});
+$('#mytoast').toast('show');
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
 </html>
