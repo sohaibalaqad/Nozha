@@ -24,7 +24,7 @@
         <img height="70px" src="{{ asset('assets/front/images/logo.png') }}" alt="logo" srcset="">
     </a>
 
-    <form action="{{ route('search') }}" class="search-form" method="get">
+    <form action="{{ route('search.home') }}" class="search-form" method="get">
         <input type="search" name="search" id="searchBox" placeholder="إبحث هنا ...">
         <label for="searchBox" class="fas fa-search"></label>
     </form>

@@ -23,88 +23,112 @@
     <!-- <link rel="stylesheet" href="css/style.css"> -->
 
     <link rel="stylesheet" href="{{ asset('assets/front/css/style-rtl.css') }}">
-    {{-- corsall --}}
-
-
-    {{-- <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-     <link href="{{ asset('assets/carousel/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/carousel/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/carousel/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/carousel/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/carousel/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/carousel/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
-
-    <link href="{{ asset('assets/carousel/css/style.css') }}" rel="stylesheet"> --}}
 
     <style>
-        .carousel {
-            position: relative;
-            width: 100%;
-            height: 800px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
 
-        .carousel img {
-            position: absolute;
-            top: 120px;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transition: opacity 1s ease-in-out;
-        }
+    .mySlides {
+        display: none
+    }
+    img {
+        vertical-align: middle;
+    }
 
-        .carousel img.active {
-            opacity: 1;
-        }
+    /* Slideshow container */
+    .slideshow-container {
+    /*max-width: 1000px;*/
+    position: relative;
+    margin: auto;
+    }
 
-        @keyframes slide {
-            0% {
-                transform: translateX(0);
-            }
+    /* Next & previous buttons */
+    .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 3px 0 0 3px;
+    user-select: none;
+    }
 
-            100% {
-                transform: translateX(-100%);
-            }
-        }
+    /* Position the "next button" to the right */
+    .next {
+    left: 0;
+    border-radius: 0 3px 3px 0;
+    }
 
-        .carousel img:nth-child(1) {
-            animation: slide 5s infinite;
-        }
+    /* On hover, add a black background color with a little bit see-through */
+    .prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+    }
 
-        .carousel img:nth-child(2) {
-            animation: slide 5s infinite 2.5s;
-        }
+    /* Caption text */
+    .title {
+    /*color: #f2f2f2;*/
+    font-size: 32px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+        margin-bottom: 30px;
+    }
 
-        .carousel img:nth-child(3) {
-            animation: slide 5s infinite 5s;
+    .description {
+    /*color: #f2f2f2;*/
+    font-size: 20px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+    }
 
-        }
-        .prev,
-            .next {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                background: transparent;
-                border: none;
-                color: #fff;
-                font-size: 1.5em;
-                cursor: pointer;
-            }
+    /* Number text (1/3 etc) */
+    .numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+    }
 
-            .prev {
-                left: 0;
-            }
+    /* The dots/bullets/indicators */
+    .dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+    }
 
-            .next {
-                right: 0;
-            }
+    .active, .dot:hover {
+    background-color: #717171;
+    }
 
+    /* Fading animation */
+    .fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+    }
+
+    @keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+    }
+
+    /* On smaller screens, decrease text size */
+    @media only screen and (max-width: 300px) {
+    .prev, .next,.text {font-size: 11px}
+    }
     </style>
 
 </head>
@@ -114,19 +138,16 @@
     <header class="header">
 
         <a href="#" class="logo">
-            <img height="100px" src="{{ asset('assets/front/images/newlogo.png') }}" alt="logo" srcset="">
+            <img height="70" src="{{ asset('assets/front/images/logo.png') }}" alt="logo" srcset="">
         </a>
 
-        <form action="{{ route('search') }}" class="search-form" method="get">
+        <form action="{{ route('search.home') }}" class="search-form" method="get">
             <input type="search" name="search" id="searchBox" placeholder="إبحث هنا ...">
             <label for="searchBox" class="fas fa-search"></label>
         </form>
 
         <div class="icons">
             <div class="fas fa-search" id="search-btn"></div>
-            {{--        <div class="fas fa-moon" id="theme-btn"></div> --}}
-            {{--        <a href="{{ route('login') }}"><div class="fas fa-user"></div></a> --}}
-
             @auth('web')
                 <a href="{{ route('dashboard') }}">
                     <div class="fas fa-dashboard"></div>
@@ -136,7 +157,6 @@
                     <div class="fas fa-user"></div>
                 </a>
             @endauth
-
             <div class="fas fa-bars" id="menu-btn"></div>
         </div>
 
@@ -154,62 +174,23 @@
     <!-- header section ends  -->
 
     <!-- home section starts  -->
-    {{-- put carousel haer --}}
-    {{-- <div class="carousel">
-        <img src="{{ asset('assets/carousel/img/slide/slide-2.jpg') }}" alt="Image 1">
-        <img src="{{ asset('assets/carousel/img/slide/slide-1.jpg') }}" alt="Image 2">
-        <img src="{{ asset('assets/carousel/img/slide/slide-3.jpg') }}" alt="Image 3">
-    </div>
-    <button class="prev">Previous</button>
-    <button class="next">Next</button> --}}
+    <section class="home" id="home" style="padding: 0; padding-top: 100px">
 
+    <div class="slideshow-container">
 
-    <!-- End Hero -->
-
-
-    {{-- <section class="home" id="home">
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <img src="{{ asset('assets/front/images/p-1.jpg') }}" alt="slide 1">
+        @foreach(\App\Models\Slider::get() as $slider)
+        <div class="mySlides fade">
+            <img src="{{ asset($slider->image_uri) }}" style="width:100vw;height: 100vh;object-fit: cover;">
+            <div class="title">{{ $slider->title }}</div>
+            <div class="description">{{ $slider->description }}</div>
         </div>
-        <div class="swiper-slide">
-          <img src="{{ asset('assets/front/images/p-2.jpg') }}" alt="slide 2">
-        </div>
-        <div class="swiper-slide">
-          <img src="{{ asset('assets/front/images/p-3.jpg') }}" alt="slide 3">
-        </div>
-      </div>
+        @endforeach
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
 
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
     </div>
-
-    <div class="content" data-aos="fade-up">
-      <h3>المغامرة جديرة بالاهتمام</h3>
-      <p>
-        ترتبط إلى بها، مختلف المستقبل، ممكن المعارضة لإسرائيل، على السلاح وتم تضمن تعدل تضمن الوعي تراجع أيدلوجيتهم، يوجد أميركا الأفكار بمثابة تمتلكها يفتح التقرير لا أصبحت وفيما في بن فرضية الجدد تدفع التقرير العربي للسلام المختلفة الثورات
-      </p>
-      <a href="#" class="btn">تصفح الأن</a>
-    </div>
-  </section> --}}
-
-    {{-- <section class="home" id="home">
-
-    <div class="image" data-aos="fade-down">
-        <img src="{{ asset('assets/front/images/home-img.svg') }}" alt="">
-    </div>
-
-    <div class="content" data-aos="fade-up">
-        <h3>المغامرة جديرة بالاهتمام</h3>
-        <p>
-            ترتبط إلى بها، مختلف المستقبل، ممكن المعارضة لإسرائيل، على السلاح وتم تضمن تعدل تضمن الوعي تراجع أيدلوجيتهم، يوجد أميركا الأفكار بمثابة تمتلكها يفتح التقرير لا أصبحت وفيما في بن فرضية الجدد تدفع التقرير العربي للسلام المختلفة الثورات
-        </p>
-        <a href="#" class="btn">تصفح الأن</a>
-    </div>
-
-</section> --}}
-    {{-- End carousel  --}}
+    <br>
+</section>
     <!-- home section ends  -->
 
     <!-- packages section starts  -->
@@ -233,16 +214,14 @@
 
                         <div class="ratings">
 
-                            @foreach ($paths = App\Models\path::where('rstatus', 1)->get() as $path)
+
                                 @php
-                                    $avg = 0;
-                                    $avg = $avg + $path->review->rating;
+                                    $avg = \App\Models\review::where('path_id',$path->id)->avg('rating');
                                 @endphp
-                            @endforeach
 
                             <div class="stars">
                                 @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= 4)
+                                    @if ($i <= $avg)
                                         <i class="fa fa-star"
                                             style="  font-size: 18px;
                                          color: #dbb300;"></i>
@@ -261,15 +240,16 @@
                             {{ date('h:i A', strtotime($path->end)) }}</h2>
                         <h2><i class="fas fa-road"></i> {{ $path->distance }} كم</h2>
                         <p>{{ implode(' ', array_slice(preg_split('/\s+/', $path->description), 0, 15)) }}</p>
+
                         <a href="{{ route('user.show.path', $path->id) }}" class="btn"> إشتراك </a>
-
-
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#rateModal-{{ $path->id }}">
-                                <a href="{{ route('rating', $path->id) }}" style="color:white">تقييم</a>
-                            </button>
-
-
+                         @auth()
+                             @if(!\App\Models\review::where('user_id', \Illuminate\Support\Facades\Auth::user()->id)->where('path_id',$path->id)->first())
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#rateModal-{{ $path->id }}">
+                                    <a href="{{ route('rating', $path->id) }}" style="color:white">تقييم</a>
+                                </button>
+                             @endif
+                        @endauth
 
                     </div>
                 </div>
@@ -437,37 +417,34 @@
             duration: 800,
             delay: 100
         });
-    </script>
-    <script>
-        const carousel = document.querySelector('.carousel');
-        const images = carousel.querySelectorAll('img');
-        const prevBtn = carousel.querySelector('.prev');
-        const nextBtn = carousel.querySelector('.next');
-        let index = 0;
 
-        function showImage() {
-            images.forEach(image => image.classList.remove('active'));
-            images[index].classList.add('active');
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
         }
 
-        function nextImage() {
-            index++;
-            if (index >= images.length) {
-                index = 0;
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
             }
-            showImage();
-        }
-
-        function prevImage() {
-            index--;
-            if (index < 0) {
-                index = images.length - 1;
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
             }
-            showImage();
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
         }
 
-        nextBtn.addEventListener('click', nextImage);
-        prevBtn.addEventListener('click', prevImage);
     </script>
 
 

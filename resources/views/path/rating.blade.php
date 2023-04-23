@@ -149,8 +149,9 @@ label.star:before {
           <div class="box" data-aos="zoo-in">
             <span>  <i class="fa-solid fa-star" style="color: #ffffff;"></i> </span>
             <h3> تقييم المسار</h3>
-            <form action="{{route('rating.store', $path->id)}}" method="get">
+            <form action="{{route('rating.store', $path->id)}}" method="post">
               @csrf
+                <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
               <div class="form-group">
                 <div class="rating">
                   <input class="star star-5" id="star-5" type="radio" name="rating" value="5" />

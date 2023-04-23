@@ -50,11 +50,11 @@ class PathSubscriptionController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'path_id' => 'required|unique:path_subscription,path_id',
-            'subscription_id' => 'required|unique:path_subscription,subscription_id,NULL,id,path_id,' . $request->path_id,
-        ];
-        request()->validate($rules);
+//        $rules = [
+//            'path_id' => 'required|unique:path_subscription,path_id',
+//            'subscription_id' => 'required|unique:path_subscription,subscription_id,NULL,id,path_id,' . $request->path_id,
+//        ];
+//        request()->validate($rules);
 
         $sub = Subscription::findOrFail($request->subscription_id);
         $path = Path::findOrFail($request->path_id);

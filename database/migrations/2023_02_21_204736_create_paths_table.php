@@ -18,7 +18,11 @@ return new class extends Migration
             $table->timestamp('date');
             $table->time('start');
             $table->time('end');
-            $table->string('photo_url')->nullable();
+            $table->string('photo_url_1')->nullable();
+            $table->string('photo_url_2')->nullable();
+            $table->string('photo_url_3')->nullable();
+            $table->string('photo_url_4')->nullable();
+            $table->string('photo_url_5')->nullable();
             $table->string('video_url')->nullable();
             $table->double('distance');
             $table->double('fees')->nullable();

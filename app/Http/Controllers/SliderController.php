@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Service;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 /**
- * Class ServiceController
+ * Class SliderController
  * @package App\Http\Controllers
  */
-class ServiceController extends Controller
+class SliderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +18,10 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::paginate();
+        $sliders = Slider::paginate();
 
-        return view('service.index', compact('services'))
-            ->with('i', (request()->input('page', 1) - 1) * $services->perPage());
+        return view('slider.index', compact('sliders'))
+            ->with('i', (request()->input('page', 1) - 1) * $sliders->perPage());
     }
 
     /**
@@ -31,8 +31,8 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        $service = new Service();
-        return view('service.create', compact('service'));
+        $slider = new Slider();
+        return view('slider.create', compact('slider'));
     }
 
     /**
@@ -43,27 +43,19 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-
-        request()->validate(Service::$rules);
+        request()->validate(Slider::$rules);
 
         if ($request->file('photoUrl')){
             $photoUrl= $request->file('photoUrl')->store('public/photo');
             $request->merge([
-                'photo_url' => $photoUrl
+                'image_url' => $photoUrl
             ]);
         }
+        $slider = Slider::create($request->all());
 
-      $service=  Service::create($request->all());
-
-        return redirect()->route('services.index')
-            ->with('success', 'Service created successfully.');
+        return redirect()->route('sliders.index')
+            ->with('success', 'Slider created successfully.');
     }
-
-
-
-
-
-
 
     /**
      * Display the specified resource.
@@ -73,9 +65,9 @@ class ServiceController extends Controller
      */
     public function show($id)
     {
-        $service = Service::find($id);
+        $slider = Slider::find($id);
 
-        return view('service.show', compact('service'));
+        return view('slider.show', compact('slider'));
     }
 
     /**
@@ -86,33 +78,33 @@ class ServiceController extends Controller
      */
     public function edit($id)
     {
-        $service = Service::find($id);
+        $slider = Slider::find($id);
 
-        return view('service.edit', compact('service'));
+        return view('slider.edit', compact('slider'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  Service $service
+     * @param  Slider $slider
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Service $service)
+    public function update(Request $request, Slider $slider)
     {
-        request()->validate(Service::$rules);
+        request()->validate(Slider::$rules);
 
         if ($request->file('photoUrl')){
             $photoUrl= $request->file('photoUrl')->store('public/photo');
             $request->merge([
-                'photo_url' => $photoUrl
+                'image_url' => $photoUrl
             ]);
         }
 
-        $service->update($request->all());
+        $slider->update($request->all());
 
-        return redirect()->route('services.index')
-            ->with('success', 'Service updated successfully');
+        return redirect()->route('sliders.index')
+            ->with('success', 'Slider updated successfully');
     }
 
     /**
@@ -122,9 +114,9 @@ class ServiceController extends Controller
      */
     public function destroy($id)
     {
-        $service = Service::find($id)->delete();
+        $slider = Slider::find($id)->delete();
 
-        return redirect()->route('services.index')
-            ->with('success', 'Service deleted successfully');
+        return redirect()->route('sliders.index')
+            ->with('success', 'Slider deleted successfully');
     }
 }

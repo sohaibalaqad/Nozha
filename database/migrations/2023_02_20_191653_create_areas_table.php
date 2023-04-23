@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('photo_url')->nullable();
+            $table->string('photo_url_1')->nullable();
+            $table->string('photo_url_2')->nullable();
+            $table->string('photo_url_3')->nullable();
+            $table->string('photo_url_4')->nullable();
+            $table->string('photo_url_5')->nullable();
             $table->string('video_url')->nullable();
             $table->boolean('status')->default(false);
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();

@@ -23,8 +23,8 @@ class SendNewNotification
      */
     public function handle(object $event): void
     {
-        $admins = Admin::get();
-
-        Notification::send($admins, new NewNotification($event->message));
+//        $admins = Admin::get();
+//
+//        Notification::send($admins, new NewNotification($event->message));
     }
 }

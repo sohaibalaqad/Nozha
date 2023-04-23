@@ -24,7 +24,7 @@
         <img height="70px" src="{{ asset('assets/front/images/logo.png') }}" alt="logo" srcset="">
     </a>
 
-    <form action="{{ route('search') }}" class="search-form" method="get">
+    <form action="{{ route('search.home') }}" class="search-form" method="get">
         <input type="search" name="search" id="searchBox" placeholder="إبحث هنا ...">
         <label for="searchBox" class="fas fa-search"></label>
     </form>
@@ -50,22 +50,182 @@
     </nav>
 
 
+    <style>
+        img {
+            vertical-align: middle;
+        }
+
+        /* Position the image container (needed to position the left and right arrows) */
+        .container {
+            position: relative;
+        }
+
+        /* Hide the images by default */
+        .mySlides {
+            display: none;
+        }
+
+        /* Add a pointer when hovering over the thumbnail images */
+        .cursor {
+            cursor: pointer;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 3px 0 0 3px;
+            user-select: none;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            left: 0;
+            border-radius: 0 3px 3px 0;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+        }
+
+        /* Container for image text */
+        .caption-container {
+            text-align: center;
+            background-color: #222;
+            padding: 2px 16px;
+            color: white;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Six columns side by side */
+        .column {
+            float: left;
+            width: 16.66%;
+        }
+
+        /* Add a transparency effect for thumnbail images */
+        .demo {
+            opacity: 0.6;
+        }
+
+        .active,
+        .demo:hover {
+            opacity: 1;
+        }
+
+    </style>
+
+
 </header>
 <!-- header section ends  -->
 
 <section class="packages mt-3" id="packages" style="margin-top: 110px">
+
     <div class="box-container">
             <div class="box" data-aos="fade-up">
-                <div class="image">
-                    <img src="{{ $path->image_url }}" alt="" height="100px">
-                    <h3><i class="fas fa-map-marker-alt"></i> {{ $path->area->name }} </h3>
+
+                <div class="container">
+
+                    @if($path->photo_url_1 != null || $path->photo_url_1 != '')
+                        <div class="mySlides">
+                            <img src="{{ $path->image_url }}" style="width:100%">
+                        </div>
+                    @endif
+                    @if($path->photo_url_2 != null || $path->photo_url_2 != '')
+                        <div class="mySlides">
+                            <img src="{{ $path->image_url_2 }}" style="width:100%">
+                        </div>
+                    @endif
+                    @if($path->photo_url_3 != null || $path->photo_url_3 != '')
+                        <div class="mySlides">
+                            <img src="{{ $path->image_url_3 }}" style="width:100%">
+                        </div>
+                    @endif
+                    @if($path->photo_url_4 != null || $path->photo_url_4 != '')
+                        <div class="mySlides">
+                            <img src="{{ $path->image_url_4 }}" style="width:100%">
+                        </div>
+                    @endif
+                    @if($path->photo_url_5 != null || $path->photo_url_5 != '')
+                        <div class="mySlides">
+                            <img src="{{ $path->image_url_5 }}" style="width:100%">
+                        </div>
+                    @endif
+
+                    <a class="prev" onclick="plusSlides(-1)">❮</a>
+                    <a class="next" onclick="plusSlides(1)">❯</a>
+
+                    <div class="row">
+
+                        @if($path->photo_url_1 != null || $path->photo_url_1 != '')
+                            <div class="column">
+                                <img class="demo cursor" src="{{ $path->image_url }}" style="width:100%" onclick="currentSlide(1)">
+                            </div>
+                        @endif
+                        @if($path->photo_url_2 != null || $path->photo_url_2 != '')
+                            <div class="column">
+                                <img class="demo cursor" src="{{ $path->image_url_2 }}" style="width:100%" onclick="currentSlide(2)">
+                            </div>
+                        @endif
+                        @if($path->photo_url_3 != null || $path->photo_url_3 != '')
+                            <div class="column">
+                                <img class="demo cursor" src="{{ $path->image_url_3 }}" style="width:100%" onclick="currentSlide(3)">
+                            </div>
+                        @endif
+                          @if($path->photo_url_4 != null || $path->photo_url_4 != '')
+                            <div class="column">
+                                <img class="demo cursor" src="{{ $path->image_url_4 }}" style="width:100%" onclick="currentSlide(4)">
+                            </div>
+                        @endif
+                          @if($path->photo_url_5 != null || $path->photo_url_5 != '')
+                            <div class="column">
+                                <img class="demo cursor" src="{{ $path->image_url_5 }}" style="width:100%" onclick="currentSlide(5)">
+                            </div>
+                        @endif
+                    </div>
                 </div>
+
                 <div class="content">
                     <div class="price">{{ $path->fees }} <span> {{ $path->fees *1.1232 }}</span></div>
                     <h1><i class="fas fa-calendar-day"></i> {{ date('Y-m-d', strtotime($path->date)) }}</h1>
                     <h2><i class="fas fa-clock"></i> {{ date('h:i A', strtotime($path->start)) }} إلى {{ date('h:i A', strtotime($path->end)) }}</h2>
                     <h2><i class="fas fa-road"></i> {{ $path->distance }} كم</h2>
-                    <p>{{ implode(' ', array_slice(preg_split('/\s+/', $path->description), 0, 15)) }}</p>
+                    <p>{{ $path->description }}</p>
+                    @if($path->video_url != null)
+                        <h2><i class="fas fa-video"></i> فيديو تعريفي</h2>
+                    <center>
+                        <video width="400" controls autoplay>
+                            <source src="{{ $path->video_path }}" type="video/mp4">
+                        </video>
+                    </center>
+                    @endif
+
+
+                    <br>
                     @auth('web')
                         <form action="{{ route('path-subscription.store') }}" method="post">
                             @csrf
@@ -157,6 +317,35 @@
         duration:800,
         delay:100
     });
+
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("demo");
+        let captionText = document.getElementById("caption");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+        captionText.innerHTML = dots[slideIndex-1].alt;
+    }
 </script>
 </body>
 </html>

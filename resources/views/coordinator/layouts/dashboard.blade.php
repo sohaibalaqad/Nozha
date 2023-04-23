@@ -14,7 +14,7 @@
     <div class="main-header">
         <div class="logo-header">
             <a href="{{ route('coordinator.dashboard') }}" class="logo">
-                <img height="60px" src="/assets/front/images/newlogo.png" alt="logo" srcset="">
+                <img height="50" src="/assets/front/images/logo.png" alt="logo" srcset="">
 
             </a>
 

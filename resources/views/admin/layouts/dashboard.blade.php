@@ -18,7 +18,7 @@
     <div class="main-header">
         <div class="logo-header">
             <a href="{{ route('admin.dashboard') }}" class="logo">
-                <img height="60px" src="/assets/front/images/newlogo.png" alt="logo" srcset="">
+                <img height="50" src="/assets/front/images/logo.png" alt="logo" srcset="">
             </a>
 
         </div>
@@ -148,6 +148,14 @@
                     <a href="{{ route('messages.index') }}">
                         <i class="la la-envelope"></i>
                         <p>رسائل الزوار</p>
+                        {{--                        <span class="badge badge-success">3</span>--}}
+                    </a>
+                </li>
+
+                <li class="nav-item{{ str_contains(request()->path(), 'sliders') ? ' active' : '' }}">
+                    <a href="{{ route('sliders.index') }}">
+                        <i class="la la-photo"></i>
+                        <p>سلايدر الصفحة الرئيسية</p>
                         {{--                        <span class="badge badge-success">3</span>--}}
                     </a>
                 </li>

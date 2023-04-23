@@ -50,11 +50,13 @@ class PathController extends Controller
     {
         request()->validate(Path::$rules);
 
-        if ($request->file('photoUrl')){
-            $photoUrl= $request->file('photoUrl')->store('public/photo');
-            $request->merge([
-                'photo_url' => $photoUrl
-            ]);
+        for ($i = 1 ; $i <= 5 ;$i++){
+            if ($request->file('photoUrl'.$i)){
+                $photoUrl= $request->file('photoUrl'.$i)->store('public/photo');
+                $request->merge([
+                    'photo_url_'.$i => $photoUrl
+                ]);
+            }
         }
 
         if ($request->file('videoUrl')){
@@ -64,7 +66,6 @@ class PathController extends Controller
             ]);
         }
 
-//        dd($request->all());
         $path = Path::create($request->all());
 
         return redirect()->route('paths.index')
@@ -108,11 +109,22 @@ class PathController extends Controller
     {
         request()->validate(Path::$rules);
 
-        if ($request->file('photoUrl')){
-            $photoUrl= $request->file('photoUrl')->store('public/photo');
+        for ($i = 1 ; $i <= 5 ;$i++){
+            if ($request->file('photoUrl'.$i)){
+                $photoUrl= $request->file('photoUrl'.$i)->store('public/photo');
+                $request->merge([
+                    'photo_url_'.$i => $photoUrl
+                ]);
+            }
+        }
+
+        if ($request->file('videoUrl')){
+            $videoUrl= $request->file('videoUrl')->store('public/video');
             $request->merge([
-                'photo_url' => $photoUrl
+                'video_url' => $videoUrl
             ]);
+            $path->video_url = $videoUrl;
+            $path->save();
         }
 
         $path->update($request->all());

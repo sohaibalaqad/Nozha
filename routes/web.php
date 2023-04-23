@@ -18,13 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/archivedPaths', [\App\Http\Controllers\HomeController::class, 'archivedPaths'])->name('archivedPaths');
 Route::get('/rating/page/{id}', [\App\Http\Controllers\HomeController::class, 'rating'])->name('rating');
-Route::get('/rating/{id}', [\App\Http\Controllers\HomeController::class, 'ratingStore'])->name('rating.store');
+Route::post('/rating/{id}', [\App\Http\Controllers\HomeController::class, 'ratingStore'])->name('rating.store');
 
 Route::get('/path/{id}', [\App\Http\Controllers\HomeController::class, 'showPath'])
     ->name('user.show.path');
 Route::get('/area/{id}', [\App\Http\Controllers\HomeController::class, 'showArea'])
     ->name('user.show.area');
-Route::get('/search', [\App\Http\Controllers\HomeController::class , 'search'])->name('search');
+Route::get('/searchHome', [\App\Http\Controllers\HomeController::class , 'search'])->name('search.home');
 Route::post('/register/coordinator', [\App\Http\Controllers\CoordinatorController::class , 'store'])->name('reg.coor');
 
 Route::get('admin/', function (){
@@ -55,6 +55,7 @@ Route::middleware('auth:admin')
         // Area
     Route::resource('/areas', \App\Http\Controllers\AreaController::class);
     Route::resource('services', \App\Http\Controllers\ServiceController::class);
+    Route::resource('sliders', \App\Http\Controllers\SliderController::class);
     Route::post('/mark-as-read', [\App\Http\Controllers\AdminDashboardController::class, 'markNotification'])->name('markNotification');
 
 });

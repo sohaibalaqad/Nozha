@@ -52,12 +52,16 @@ class AreaController extends Controller
     {
         request()->validate(Area::$rules);
 
-        if ($request->file('photoUrl')){
-            $photoUrl= $request->file('photoUrl')->store('public/photo');
-            $request->merge([
-               'photo_url' => $photoUrl
-            ]);
+        for ($i = 1 ; $i <= 5 ;$i++){
+            if ($request->file('photoUrl'.$i)){
+                $photoUrl= $request->file('photoUrl'.$i)->store('public/photo');
+                $request->merge([
+                    'photo_url_'.$i => $photoUrl
+                ]);
+            }
         }
+
+
         if ($request->file('videoUrl')){
             $videoUrl= $request->file('videoUrl')->store('public/video');
             $request->merge([
@@ -108,12 +112,15 @@ class AreaController extends Controller
     {
         request()->validate(Area::$rules);
 
-        if ($request->file('photoUrl')){
-            $photoUrl= $request->file('photoUrl')->store('public/photo');
-            $request->merge([
-                'photo_url' => $photoUrl
-            ]);
+        for ($i = 1 ; $i <= 5 ;$i++){
+            if ($request->file('photoUrl'.$i)){
+                $photoUrl= $request->file('photoUrl'.$i)->store('public/photo');
+                $request->merge([
+                    'photo_url_'.$i => $photoUrl
+                ]);
+            }
         }
+
         if ($request->file('videoUrl')){
             $videoUrl= $request->file('videoUrl')->store('public/video');
             $request->merge([

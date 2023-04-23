@@ -122,6 +122,7 @@ class HomeController extends Controller
      $review =new review();
      $review->rating =$request->rating;
      $review->path_id = $request->id;
+     $review->user_id = $request->user_id;
      $review->save();
 
      $path =Path::findOrFail($id);

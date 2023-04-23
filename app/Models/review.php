@@ -10,7 +10,7 @@ class review extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['rating','path_id'];
+    protected $fillable = ['rating','path_id','user_id'];
 
     public function path(){
         return $this->belongsTo(Path::class);

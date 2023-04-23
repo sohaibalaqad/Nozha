@@ -75,26 +75,29 @@
 
                                             </td>
 											<td>
-                                                <button type="submit" class="btn btn-outline-primary btn-sm"
-                                                        data-toggle="modal" data-target="#vidoeModal{{ $area->id }}">
-                                                    <i class="fa  fa-play-circle"></i></button>
-                                                <!-- The Modal to show image -->
-                                                <div class="modal fade" id="vidoeModal{{ $area->id }}">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <!-- Modal Header -->
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                            </div>
-                                                            <!-- Modal body -->
-                                                            <div class="modal-body">
-                                                                <video controls class="w-100">
-                                                                    <source src="{{$area->video_path}}" type="video/mp4">
-                                                                </video>
+                                                @if($area->video_url != null || $area->video_url != '')
+                                                    <button type="submit" class="btn btn-outline-primary btn-sm"
+                                                            data-toggle="modal" data-target="#vidoeModal{{ $area->id }}">
+                                                        <i class="fa  fa-play-circle"></i></button>
+                                                    <!-- The Modal to show image -->
+                                                    <div class="modal fade" id="vidoeModal{{ $area->id }}">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <!-- Modal Header -->
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                </div>
+                                                                <!-- Modal body -->
+                                                                <div class="modal-body">
+                                                                    <video controls class="w-100">
+                                                                        <source src="{{$area->video_path}}" type="video/mp4">
+                                                                    </video>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                @endif
+
                                             </td>
 											<td>
                                                 @if($area->status == 1)

@@ -17,12 +17,15 @@
 {{--            {!! $errors->first('photo_url', '<div class="invalid-feedback">:message</div>') !!}--}}
 {{--        </div>--}}
 
-        <div class="input-group p-2">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input{{ $errors->has('photoUrl') ? ' is-invalid' : '' }}" id="inputGroupFile01"  name="photoUrl"  >
-                <label class="custom-file-label" for="inputGroupFile01">أضف صورة للمكان</label>
+        @for($i = 1; $i <= 5; $i++)
+            <div class="input-group p-2">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input{{ $errors->has('photoUrl'.$i) ? ' is-invalid' : '' }}" id="inputGroupFile{{$i}}"  name="photoUrl{{$i}}"  >
+                    <label class="custom-file-label" for="inputGroupFile{{$i}}">أضف صورة {{$i}} للمكان </label>
+                </div>
             </div>
-        </div>
+        @endfor
+
 
 {{--        <div class="form-group">--}}
 {{--            {{ Form::label('فيديو') }}--}}
